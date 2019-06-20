@@ -49,4 +49,16 @@ class DiaryController extends Controller
 
         return redirect()->route('diary.index'); //一覧ページにリダイレクト
     }
+
+    //引数の変数名はなんでもOK
+    //引数はルートのワイルドカードに入っている値
+    public function destroy(int $id){
+         //Diaryモデルを使用して、diariesテーブルから$idと一致するidをもつデータを取得
+    $diary = Diary::find($id); 
+
+    //取得したデータを削除
+    $diary->delete();
+
+    return redirect()->route('diary.index');
+    }
 }

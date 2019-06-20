@@ -27,6 +27,8 @@ class CreateDiary extends FormRequest
         return [
             //key:inputタグのname属性
             //value:バリデーションの条件
+            //連想配列になっている
+            //|で区切ることによって複数条件を記述出来る
             'title' => 'required|max:30', 
             'body' => 'required',
         ];
