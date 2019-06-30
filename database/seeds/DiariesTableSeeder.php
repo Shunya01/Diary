@@ -14,9 +14,11 @@ class DiariesTableSeeder extends Seeder
      */
 
 
-    public function run()
-    {
-        $diaries = [
+public function run()
+{
+    $user = DB::table('users')->first(); //追加
+
+    $diaries = [
         [
             'title' => 'セブでプログラミング',
             'body'  => '気づけばもうすぐ2ヶ月',
@@ -32,12 +34,14 @@ class DiariesTableSeeder extends Seeder
     ];
 
     foreach ($diaries as $diary) {
+
         DB::table('diaries')->insert([
             'title' => $diary['title'],
             'body' => $diary['body'],
+            'user_id' => $user->id, //追加
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
     }
-    }
+}
 }
