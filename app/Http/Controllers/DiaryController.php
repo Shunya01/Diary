@@ -15,7 +15,7 @@ class DiaryController extends Controller
 //::でメソッドを呼んでいるのはLaravelのファサードという機能の一つ
      //order by,get->クエリビルダ
      //eloquentもクエリビルダもDBを操作する機能
-    $diaries = Diary::orderBy('id', 'desc')->get();
+    $diaries = Diary::with('likes')->orderBy('id', 'desc')->get();
 
 
         // $diaries = Diary::all();
@@ -66,7 +66,7 @@ class DiaryController extends Controller
     $diary->delete();
 
     return redirect()->route('diary.index');
-    } 
+    }
 
     public function edit(Diary $diary)
     {
@@ -90,6 +90,20 @@ class DiaryController extends Controller
     $diary->save(); //DBに保存
 
     return redirect()->route('diary.index'); //一覧ページにリダイレクト
+}
+
+    public function like(int $id)
+{
+    $diary = Diary::where('id', $id)->with('likes')->first();
+
+    $diary->likes()->attach(Auth::user()->id);
+}
+
+    public function dislike(int $id)
+{
+    $diary = Diary::where('id', $id)->with('likes')->first();
+
+    $diary->likes()->detach(Auth::user()->id);
 }
 
 }
